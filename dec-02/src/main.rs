@@ -24,22 +24,29 @@ fn build_input(file: &String) -> Vec<Vec<i32>> {
     data
 }
 
+fn is_safe(v: Vec<i32>) -> bool {
+    let is_safe_decreasing = v.is_sorted_by(|a,b| (a > b) && ((a-b).abs() <= 3));
+    let is_safe_increasing = v.is_sorted_by(|a,b| (a < b) && ((a-b).abs() <= 3));
+    if DEBUG {
+        println!("v: {:?}", v);
+        println!("Increasing?: {}", is_safe_increasing);
+        println!("Decreasing?: {}", is_safe_decreasing);
+        println!();
+    }
+
+    is_safe_decreasing || is_safe_increasing
+}
+
 fn part1(input: Vec<Vec<i32>>) -> i32 {
     let mut safe_reports = 0_i32;
     if DEBUG { println!("Part1 debug: "); }
 
-    for v in input {
-        let is_safe_decreasing = v.is_sorted_by(|a,b| (a > b) && ((a-b).abs() <= 3));
-        let is_safe_increasing = v.is_sorted_by(|a,b| (a < b) && ((a-b).abs() <= 3));
-        if DEBUG {
-            println!("v: {:?}", v);
-            println!("Increasing?: {}", is_safe_increasing);
-            println!("Decreasing?: {}", is_safe_decreasing);
-            println!();
-        }
-
-        if is_safe_decreasing || is_safe_increasing { safe_reports += 1; }
-    }
+    input.iter()
+        .for_each(|v| 
+            if is_safe(v.clone()) { 
+                safe_reports+=1 
+            }
+        );
 
     safe_reports
 }
@@ -52,11 +59,8 @@ fn part2(input: Vec<Vec<i32>>) -> i32 {
         for i in 0..v.len() {
             let mut t = v.clone();
             t.remove(i);
-            let is_safe_decreasing = t.is_sorted_by(|a,b| (a > b) && ((a-b).abs() <= 3));
-            let is_safe_increasing = t.is_sorted_by(|a,b| (a < b) && ((a-b).abs() <= 3));
-
-            if is_safe_decreasing || is_safe_increasing { 
-                safe_reports += 1; 
+            if is_safe(t) {
+                safe_reports += 1;
                 break;
             }
         }
