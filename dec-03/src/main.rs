@@ -20,13 +20,13 @@ fn build_input(file: &String) -> String {
 }
 
 fn part1(input: String) -> i64 {
-    let regex = Regex::new(r"mul\(([0-9]+),([0-9]+)\)").unwrap();
+    let regex = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
     let mut final_nums = vec![];
     for (_, [first, second]) in regex.captures_iter(input.as_str()).map(|r| r.extract()) {                     
         let first = first.to_string().parse::<i64>().unwrap();
         let second = second.to_string().parse::<i64>().unwrap();
         if DEBUG { println!("({},{})", first, second); }
-        
+
         final_nums.push(first*second);
     };
 
@@ -34,7 +34,7 @@ fn part1(input: String) -> i64 {
 }
 
 fn part2(input: String) -> i64 {
-    let regex = Regex::new(r"(mul\([0-9]+,[0-9]+\)|don\'t\(\)|do\(\))").unwrap();
+    let regex = Regex::new(r"(mul\(\d+,\d+\)|don\'t\(\)|do\(\))").unwrap();
     let mut new_muls = vec![];
     let mut skip = false;
     for (_, [op]) in regex.captures_iter(input.as_str()).map(|r| r.extract()) {        
