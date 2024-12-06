@@ -64,6 +64,17 @@ fn is_sorted_fix(vec: &Vec<u32>, input: &Input) -> (bool,Vec<u32>) {
         }
     }
 
+    if !good {
+        let mut done = false;
+        while !done {
+            let ans = is_sorted_fix(&new_vec, input);
+            new_vec = ans.1;
+            done = ans.0;            
+        }
+
+        return (false, new_vec);
+    }
+
     (good, new_vec)
 }
 
@@ -85,12 +96,7 @@ fn part2(input: &Input) -> u32 {
     for run in input.page_updates.iter() {
         let ans = is_sorted_fix(run, input);
         if !ans.0 {
-            let mut ans2 = ans;
-            while !ans2.0 {
-                ans2 = is_sorted_fix(&ans2.1, input);
-            }
-
-            fixed.push(ans2.1);
+            fixed.push(ans.1);
         }
     }
 
