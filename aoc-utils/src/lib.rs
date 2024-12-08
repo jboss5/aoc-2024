@@ -6,8 +6,8 @@ use std::str::FromStr;
 
 #[derive(Debug,Copy,Clone,Hash,Eq,PartialEq)]
 pub struct Coord {
-    x: usize,
-    y: usize
+    pub x: usize,
+    pub y: usize
 }
 
 pub fn get_lines(filename: &String) -> Lines<BufReader<File>> {
