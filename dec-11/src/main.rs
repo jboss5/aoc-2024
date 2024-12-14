@@ -32,6 +32,11 @@ fn run(mut input: String) -> Vec<String> {
     }
 }
 
+// if current stone value + iteration is in cache, then just return it
+// if blink is 1, return the number & add to cache + return
+// if not, get this stone's lhs and rhs values
+//      if only 1, then didn't split and add that number to cache + return
+//      if 2, then add p2's num to self & to cache, return
 fn part1_2(stone: String, blinks: u32, cache: &mut HashMap<String,u128>) -> u128 {
     let k = format!("{}||{}",stone,blinks);
     let v = cache.get(&k);
