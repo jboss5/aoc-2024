@@ -5,5 +5,3 @@ edition = "2021"
 
 [dependencies]
 aoc-utils = { path="../aoc-utils" }
-rayon = "1.8.0"
-chashmap = "2.2.2"
